@@ -35,12 +35,9 @@ class FieldsRow extends Component {
       type: '',
       value: '',
     };
-    this.onChange = this.onChange.bind(this);
-    this.onAddRow = this.onAddRow.bind(this);
-    this.onRemoveRow = this.onRemoveRow.bind(this);
   }
 
-  onChange(e) {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value }, () => {
       if (this.props.onChangeState) {
         this.props.onChangeState(this.props.id, this.state);
@@ -48,11 +45,11 @@ class FieldsRow extends Component {
     });
   }
 
-  onAddRow() {
+  onAddRow = () => {
     this.props.onAddRow();
   }
 
-  onRemoveRow() {
+  onRemoveRow = () => {
     this.props.onRemovewRow(this.props.id);
   }
 

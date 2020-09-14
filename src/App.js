@@ -5,44 +5,24 @@ export default class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.addRow = this.addRow.bind(this);
-    this.removewRow = this.removewRow.bind(this);
-    this.getFormValues = this.getFormValues.bind(this);
-    this.convertArrayToObject = this.convertArrayToObject.bind(this);
-    this.handleFieldChange = this.handleFieldChange.bind(this);
     this.formValues = new Map();
     this.state = {
-      components: [
-        <FieldsRow
-          key={new Date().getTime()}
-          id={new Date().getTime()}
-          onAddRow={this.addRow}
-          onRemovewRow={this.removewRow}
-          onChangeState={this.handleFieldChange} />
-      ]
+      components: [new Date().getTime()]
     }
   }
 
-  handleFieldChange(id, state) {
+  handleFieldChange = (id, state) => {
     this.formValues.set(id, state);
   }
 
-  addRow() {
+  addRow = () => {
     this.setState({
-      components: this.state.components.concat([
-        <FieldsRow
-          key={new Date().getTime()}
-          id={new Date().getTime()}
-          onAddRow={this.addRow}
-          onRemovewRow={this.removewRow}
-          onChangeState={this.handleFieldChange}
-        />
-      ])
+      components: this.state.components.concat([new Date().getTime()])
     })
   }
 
-  removewRow(id) {
-    const idx = this.state.components.findIndex(el => el.id === id);
+  removewRow = (id) => {
+    const idx = this.state.components.findIndex(el => el === id);
     if (idx !== -1) {
       this.state.components.splice(idx, 1);
     }
@@ -51,7 +31,7 @@ export default class App extends React.Component {
     })
   }
 
-  getFormValues() {
+  getFormValues = () => {
     const result = {
       type: [],
       value: []
@@ -70,7 +50,14 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        {this.state.components}
+        {this.state.components.map(comp =>
+          <FieldsRow
+            key={comp}
+            id={comp}
+            onAddRow={this.addRow}
+            onRemovewRow={this.removewRow}
+            onChangeState={this.handleFieldChange} />
+        )}
       </div>
     );
   }
